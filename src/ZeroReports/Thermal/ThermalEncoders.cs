@@ -80,6 +80,35 @@ namespace ZeroReports.Thermal
             return this;
         }
 
+        public ZplEncoder DrawBarcode39(int x, int y, string data, int height = 60, int moduleWidth = 2, bool showInterpretation = true)
+        {
+            if (string.IsNullOrEmpty(data)) return this;
+            string printText = showInterpretation ? "Y" : "N";
+            _sb.AppendLine($"^FO{x},{y}^BY{moduleWidth}^B3N,N,{height},{printText},N^FD{Escape(data)}^FS");
+            return this;
+        }
+
+        public ZplEncoder DrawEan13(int x, int y, string data, int height = 60, int moduleWidth = 2, bool showInterpretation = true)
+        {
+            if (string.IsNullOrEmpty(data)) return this;
+            string printText = showInterpretation ? "Y" : "N";
+            _sb.AppendLine($"^FO{x},{y}^BY{moduleWidth}^BEN,{height},{printText},N^FD{Escape(data)}^FS");
+            return this;
+        }
+
+        public ZplEncoder DrawTextRotated(int x, int y, string text, char orientation = 'R', int fontHeight = 28, int fontWidth = 28, string font = "0")
+        {
+            if (string.IsNullOrEmpty(text)) return this;
+            _sb.AppendLine($"^FO{x},{y}^A{font}{orientation},{fontHeight},{fontWidth}^FD{Escape(text)}^FS");
+            return this;
+        }
+
+        public ZplEncoder DrawFieldInvert(int x, int y, int width, int height)
+        {
+            _sb.AppendLine($"^FO{x},{y}^FR^GB{width},{height},{height}^FS");
+            return this;
+        }
+
         public ZplEncoder DrawQrCode(int x, int y, string data, int magnification = 4)
         {
             if (string.IsNullOrEmpty(data)) return this;
@@ -140,6 +169,11 @@ namespace ZeroReports.Thermal
             return this;
         }
 
+        public TsplEncoder DrawBarcodeEan(int x, int y, string data, int height = 60)
+        {
+            return DrawBarcode(x, y, data, type: "EAN13", height: height);
+        }
+
         public TsplEncoder DrawDataMatrix(int x, int y, string data, int cellWidth = 6)
         {
             if (string.IsNullOrEmpty(data)) return this;
@@ -151,6 +185,12 @@ namespace ZeroReports.Thermal
         {
             if (string.IsNullOrEmpty(data)) return this;
             _sb.AppendLine($"QRCODE {x},{y},L,{cellWidth},A,0,\"{data}\"");
+            return this;
+        }
+
+        public TsplEncoder DrawReverse(int x, int y, int width, int height)
+        {
+            _sb.AppendLine($"REVERSE {x},{y},{width},{height}");
             return this;
         }
 
