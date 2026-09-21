@@ -21,7 +21,5 @@
   <ItemGroup>
     <PackageReference Include="ZeroPrimitives.Core" Version="1.0.0" />
     <PackageReference Include="ZeroData.Core" Version="1.0.0" />
-    <PackageReference Include="ZeroGraphics.Core" Version="1.0.1" />
-    <PackageReference Include="ZeroGraphics.Vision" Version="1.0.1" />
   </ItemGroup>
 </Project>

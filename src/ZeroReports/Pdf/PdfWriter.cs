@@ -426,6 +426,35 @@ namespace ZeroReports.Pdf
             return DrawText(text, x, y, fontSize, font: "F2");
         }
 
+        public PdfPage DrawTextRotated(string text, float x, float y, float fontSize = 54f, float angleDegrees = 45f, string font = "F1")
+        {
+            if (string.IsNullOrEmpty(text)) return this;
+            float py = ToPdfY(y);
+            string escaped = EscapePdfText(text);
+
+            double rad = angleDegrees * (Math.PI / 180.0);
+            float cos = (float)Math.Cos(rad);
+            float sin = (float)Math.Sin(rad);
+
+            _content.AppendLine("q");
+            _content.Append(cos.ToString("F4", CultureInfo.InvariantCulture)).Append(" ")
+                    .Append(sin.ToString("F4", CultureInfo.InvariantCulture)).Append(" ")
+                    .Append((-sin).ToString("F4", CultureInfo.InvariantCulture)).Append(" ")
+                    .Append(cos.ToString("F4", CultureInfo.InvariantCulture)).Append(" ")
+                    .Append(x.ToString("F2", CultureInfo.InvariantCulture)).Append(" ")
+                    .Append(py.ToString("F2", CultureInfo.InvariantCulture)).AppendLine(" cm");
+
+            _content.AppendLine("BT");
+            _content.Append("/").Append(font).Append(" ")
+                    .Append(fontSize.ToString("F1", CultureInfo.InvariantCulture)).AppendLine(" Tf");
+            _content.AppendLine("0 0 Td");
+            _content.Append("(").Append(escaped).AppendLine(") Tj");
+            _content.AppendLine("ET");
+            _content.AppendLine("Q");
+
+            return this;
+        }
+
         public PdfPage DrawImage(PdfImage image, float x, float y, float width, float height)
         {
             if (image == null) throw new ArgumentNullException(nameof(image));
