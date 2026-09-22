@@ -3,7 +3,7 @@
 [![ZeroPlatform Tier](https://img.shields.io/badge/ZeroPlatform-Tier%205%20(Presentation%20%26%20Apps)-e11d48.svg)](https://github.com/kzxl/ZeroPlatform)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![.NET Multi-Targeting](https://img.shields.io/badge/.NET-8.0%20%7C%204.6.2%20%7C%20Standard%202.0-purple.svg)](https://dotnet.microsoft.com/)
-[![NuGet Version](https://img.shields.io/badge/NuGet-1.2.0-blue.svg)](https://www.nuget.org/packages/ZeroReports)
+[![NuGet Version](https://img.shields.io/badge/NuGet-1.3.0-blue.svg)](https://www.nuget.org/packages/ZeroReports)
 
 **ZeroReports** is an enterprise-grade, zero-external-dependency banded report engine, vector PDF 1.4 document generator, and industrial thermal printer engine for .NET. Inspired by DevExpress XtraReports, it delivers native banded pagination, rich table formatting, master-detail hierarchy, vector barcodes, security watermarks, and zero-copy columnar data binding with `ZeroData`.
 
@@ -94,6 +94,29 @@ string htmlPreview = report.ExportToHtml();
 - `.NET 8.0+`
 - `.NET Framework 4.6.2+`
 - `.NET Standard 2.0`
+
+---
+
+## 🏛️ Ecosystem Architectural Alignment
+
+ZeroReports is a sovereign member of **Tier 5 (Presentation & Orchestration)** within the **ZeroPlatform** industrial automation ecosystem.
+
+```
+┌──────────────────────────────────────────────────────────┐
+│ Tier 5: Presentation & Orchestration (ZeroReports)       │
+└────────────────────────────┬─────────────────────────────┘
+                             │ consumes
+              ┌──────────────┴──────────────┐
+              ▼                             ▼
+┌──────────────────────────┐  ┌────────────────────────────┐
+│ Tier 0: Primitives       │  │ Tier 1: Data & Streaming   │
+│ (ZeroPrimitives.Core)    │  │ (ZeroData.Core)            │
+└──────────────────────────┘  └────────────────────────────┘
+```
+
+- **Upstream Ingestion**: Consumes Tier 0 foundational primitives (`ZeroPrimitives.Core 1.3.0`) and Tier 1 high-performance columnar DataFrame buffers (`ZeroData.Core 1.3.0`).
+- **Strict DAG Conformance**: Zero references to parallel presentation or higher layers.
+- **Packaging & CI/CD**: Standardized under `Company = ZeroPlatform`, `Authors = Phong Võ`, `<ZeroTier>5</ZeroTier>`.
 
 ---
 
